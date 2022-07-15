@@ -11,10 +11,10 @@
 <body>
   <header>
     <div>
-      <a target="_blank" href="./highscores.html">view high scores</a>
+      <a class="highscore" target="_blank" href="./highscores.html">view high scores</a>
     </div>
     <div>
-       <div id="timer">timer:</div>
+       <div class="timer">timer:</div>
     </div>
   </header>
   <main>
@@ -23,14 +23,23 @@
 
       <button id="start-button" class="btn" >Start Quiz</button>
 
-      <div id="highscores" class=""></div>
-        
+      
+      <!--Questions Area-->
       <section id="question-section" class="hidden">
-
+        <div class="question"></div>
+        <div class="answers" class="optionsArea"></div>
       </section>
 
-      <div id="game-over" id="hidden" ></div>
+      
+      <!--Quiz end Area/Final Scores-->
+      <div class="final-score" id="hidden">
+        <span id="scoreDisplay"></span>
+        <input type="text" name="initials" placeholder="ex. JD" id="initials">
+        <button id="submitScore" class="submit">Submit Score</button>
+      </div>
+      
     </main>
   <script src="./assets/js/script.js"></script>
 </body>
 </html>
+
