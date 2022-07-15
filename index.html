@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <title>JavaScript Code Quiz</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <title>JavaScript Code Quiz</title>
 </head>
 
 <body>
@@ -14,32 +15,35 @@
       <a class="highscore" target="_blank" href="./highscores.html">view high scores</a>
     </div>
     <div>
-       <div class="timer" class="hidden"></div>
+      <div class="timer" class="hidden"></div>
     </div>
   </header>
   <main>
-      <h1 class="title" id="sTitle"> Coding Quiz Challenge</h1>
-      <p class="instructions">Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!</p>
+    <h1 class="title" id="sTitle"> Coding Quiz Challenge</h1>
+    <p class="instructions">Try to answer the following code-related questions within the time limit. Keep in mind that
+      incorrect answers will penalize your score/time by ten seconds!</p>
 
-      <button id="start-button" class="btn" >Start Quiz</button>
-
-      
-      <!--Questions Area-->
-      <section id="question-section" class="hidden">
-        <div class="question"></div>
-        <div id="answers" class="optionsArea"></div>
-      </section>
+    <button id="start-button" class="btn">Start Quiz</button>
 
 
-      <!--Quiz end Area/Final Scores-->
-      <div id="final-score" class="hidden">
-        <span id="scoreDisplay"></span>
-        <input type="text" name="initials" placeholder="ex. JD" id="initials" class="hidden">
+    <!--Questions Area-->
+    <section id="question-section" class="hidden">
+      <div class="question"></div>
+      <div id="answers" class="optionsArea"></div>
+    </section>
+
+
+    <!--Quiz end Area/Final Scores-->
+    <div id="final-score" class="hidden">
+      <span id="scoreDisplay"></span>
+      <form id="score-entry-form">
+        <input type="text" name="initials" placeholder="ex. JD" id="initials">
         <button id="submitScore" class="submit">Submit Score</button>
-      </div>
-      
-    </main>
+      </form>
+    </div>
+
+  </main>
   <script src="./assets/js/script.js"></script>
 </body>
-</html>
 
+</html>

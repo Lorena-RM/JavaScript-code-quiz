@@ -18,7 +18,7 @@ let timer;
 let Gamescore;
 let score = 0;
 let initials = "";
-let timeLeft = 50;
+let timeLeft = 5;
 let currentQuestion = 0;
 
 //let highscores = JSON.parse(localStorage.getItem("highscores")) || [0];
@@ -32,7 +32,6 @@ const questions = [
             { text: "booleans", correct: false },
             { text: "numbers", correct: false },
             { text: "strings", correct: false },
-
         ]
     },
     {
@@ -42,7 +41,6 @@ const questions = [
             { text: "curly brackets", correct: false },
             { text: "parantheses", correct: true },
             { text: "square brackets", correct: false },
-
         ]
     },
     {
@@ -52,7 +50,6 @@ const questions = [
             { text: "other Arrays", correct: false },
             { text: "booleans", correct: false },
             { text: "all of the above", correct: true },
-
         ]
     },
 
@@ -73,13 +70,12 @@ function startGame() {
     timerEl.classList.remove('hidden')
 
     //add timer after start game btn clicked
-    var timer = setInterval(() => {
+    timer = setInterval(() => {
         timeLeft--;
         timerEl.textContent = "timer: " + timeLeft + " seconds remaining";
 
         if (timeLeft <= 0) {
-            //endGame();
-            clearInterval(timer);
+            endGame();
         }
     }, 1000);
     //shows first question
@@ -89,12 +85,15 @@ function startGame() {
 function showQuestion() {
     questionSec.classList.remove("hidden");
     questionEl.textContent = questions[currentQuestion].question
-    questions[currentQuestion].answers.forEach(answer=>{
+    options.innerHTML = ''
+    questions[currentQuestion].answers.forEach(answer => {
         //create a button
         const optionButton = document.createElement('button');
-        optionButton.textContent= answer.text;
+        optionButton.textContent = answer.text;
         optionButton.classList.add('btn')
+        optionButton.addEventListener("click", evaluateAnswer)
         options.append(optionButton)
+
     })
     // questions.forEach(answer => {
     //     const button =document.createElement
@@ -107,8 +106,27 @@ function showQuestion() {
 }
 
 
+function evaluateAnswer() {
+    //evaluate whether correct and apply points to score
 
-    
+    //trigger the next question to appear
+    if (currentQuestion < questions.length-1) {
+        currentQuestion++;
+        showQuestion();
+    } else {
+        endGame()
+    }
+}
+
+function endGame() {
+    //stopping the timer
+    clearInterval(timer);
+    //hide question section
+    questionSec.classList.add("hidden");
+    finalScore.classList.remove("hidden");
+
+    //show the score entry form
+}
 
 
 // WHEN I answer a question
