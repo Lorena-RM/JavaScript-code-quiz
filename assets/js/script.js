@@ -19,7 +19,7 @@ let timer;
 let Gamescore;
 let score = 0;
 let initials = "";
-let timeLeft = 20;
+let timeLeft = 50;
 let currentQuestion = 0;
 
 //let highscores = JSON.parse(localStorage.getItem("highscores")) || [0];
@@ -68,7 +68,7 @@ function startGame() {
     title.classList.add("hidden");
     info.classList.add("hidden");
     timerEl.textContent = `timer: ${timeLeft} Seconds Remaining`;
-    timerEl.classList.remove('hidden')
+    timerEl.classList.remove("hidden");
 
     //add timer after start game btn clicked
     timer = setInterval(() => {
@@ -87,8 +87,8 @@ function startGame() {
 function showQuestion() {
     currentScore.textContent = `score: ${score}`;
     questionSec.classList.remove("hidden");
-    questionEl.textContent = questions[currentQuestion].question
-    options.innerHTML = ''
+    questionEl.textContent = questions[currentQuestion].question;
+    options.innerHTML = '';//ASK!
     questions[currentQuestion].answers.forEach(answer => {
         //create a button
         const optionButton = document.createElement('button');
@@ -102,12 +102,12 @@ function showQuestion() {
 }
 
 
-function evaluateAnswer(e) {
+function evaluateAnswer(event) {
     //evaluate whether correct and apply points to score
-    const isCorrect = e.target.dataset.isCorrect;
+    const isCorrect = event.target.dataset.isCorrect;
     //console.log(isCorrect)
-    if(isCorrect===true){
-        console.log('correct')
+    if(isCorrect){
+        console.log("correct");
         //add points to score
         //+= adds the following #
         score += 20;
@@ -116,7 +116,6 @@ function evaluateAnswer(e) {
         console.log("incorrect")
         //take time away
         timeLeft -= 5;
-        console.log(timeLeft);
         timerEl.textContent = `timer: ${timeLeft} Seconds Remaining`;
     }
 
@@ -137,11 +136,9 @@ function endGame() {
     finalScore.classList.remove("hidden");
 
     //show the score entry form
+
 }
 
-
-// WHEN I answer a question
-// THEN I am presented with another question
 // WHEN I answer a question incorrectly
 // THEN time is subtracted from the clock
 // WHEN all questions are answered or the timer reaches 0
