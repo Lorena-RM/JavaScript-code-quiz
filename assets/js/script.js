@@ -11,16 +11,19 @@ const questionEl = document.querySelector(".question")
 const options = document.querySelector(".optionsArea")
 //Final score query selectors
 const finalScore = document.querySelector("#final-score");
-const highScoresbutton = document.querySelector(".viewHighscores");
+const highScoresbutton = document.querySelector(".Highscore");
 const currentScore = document.querySelector("#current-score");
+const wrongOrRight = document.querySelector("correct-wrong");
+const displayEndScore = document.querySelector("#scoreDisplay")
 
 //declaring lets
 let timer;
-let Gamescore;
 let score = 0;
 let initials = "";
 let timeLeft = 50;
 let currentQuestion = 0;
+
+let gameScore = localStorage.getItem("Game-Score")
 
 //let highscores = JSON.parse(localStorage.getItem("highscores")) || [0];
 
@@ -53,7 +56,24 @@ const questions = [
             { text: "all of the above", correct: true },
         ]
     },
-
+    {
+        question: "String Values must be enclosed within ___ when being assigned to variables.",
+        answers: [
+            { text: "commas", correct: false },
+            { text: "curly brackets", correct: false },
+            { text: "quotes", correct: true },
+            { text: "parentheses", correct: false },
+        ]
+    },
+    {
+        question: "a very useful tool used during development and debugging for printing content to the debugger is:",
+        answers: [
+            { text: "console.log", correct: true },
+            { text: "terminal/ bash", correct: false },
+            { text: "for loops", correct: false },
+            { text: "JavaScript", correct: false },
+        ]
+    },
 ]
 
 
@@ -89,6 +109,7 @@ function showQuestion() {
     questionSec.classList.remove("hidden");
     questionEl.textContent = questions[currentQuestion].question;
     options.innerHTML = '';//ASK!
+    //wrongOrRight.innerHTML = " ";
     questions[currentQuestion].answers.forEach(answer => {
         //create a button
         const optionButton = document.createElement('button');
@@ -108,12 +129,22 @@ function evaluateAnswer(event) {
     //console.log(isCorrect)
     if(isCorrect){
         console.log("correct");
+        
+        //wrongOrRight.textContent = "correct!";
+    
+        
+        //
         //add points to score
         //+= adds the following #
         score += 20;
         currentScore.textContent = `score: ${score}`;
     } else {
         console.log("incorrect")
+        //const wrong = document.createElement( );
+        //correct.textContent = `wrong!`;
+        //correct.classList.add("wrong-answer");
+        //questionsec.append(wrong);
+        //
         //take time away
         timeLeft -= 5;
         timerEl.textContent = `timer: ${timeLeft} Seconds Remaining`;
@@ -123,6 +154,7 @@ function evaluateAnswer(event) {
     if (currentQuestion < questions.length - 1) {
         currentQuestion++;
         showQuestion();
+        //questionSec.correct-answer.innerHTML 
     } else {
         endGame()
     }
@@ -135,6 +167,13 @@ function endGame() {
     questionSec.classList.add("hidden");
     finalScore.classList.remove("hidden");
 
+    //create p tag inside of div
+    const endScore = document.createElement('p');
+    endScore.classList.add("end-score");
+    endScore.textContent = `your final score is: ${score}`;
+    displayEndScore.append(endScore);
+
+    localStorage.setItem("Game-Score", score);
     //show the score entry form
 
 }
