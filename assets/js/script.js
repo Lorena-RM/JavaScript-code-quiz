@@ -12,13 +12,14 @@ const options = document.querySelector(".optionsArea")
 //Final score query selectors
 const finalScore = document.querySelector("#final-score");
 const highScoresbutton = document.querySelector(".viewHighscores");
+const currentScore = document.querySelector("#current-score");
 
 //declaring lets
 let timer;
 let Gamescore;
 let score = 0;
 let initials = "";
-let timeLeft = 5;
+let timeLeft = 20;
 let currentQuestion = 0;
 
 //let highscores = JSON.parse(localStorage.getItem("highscores")) || [0];
@@ -66,7 +67,7 @@ function startGame() {
     startbtn.classList.add("hidden");
     title.classList.add("hidden");
     info.classList.add("hidden");
-    timerEl.textContent = "timer: " + timeLeft + " seconds remaining";
+    timerEl.textContent = `timer: ${timeLeft} Seconds Remaining`;
     timerEl.classList.remove('hidden')
 
     //add timer after start game btn clicked
@@ -76,6 +77,7 @@ function startGame() {
 
         if (timeLeft <= 0) {
             endGame();
+            timerEl.textContent = `timer: 0 Seconds Remaining`;
         }
     }, 1000);
     //shows first question
@@ -83,6 +85,7 @@ function startGame() {
 };
 // THEN a timer starts and I am presented with a question
 function showQuestion() {
+    currentScore.textContent = `score: ${score}`;
     questionSec.classList.remove("hidden");
     questionEl.textContent = questions[currentQuestion].question
     options.innerHTML = ''
@@ -90,27 +93,35 @@ function showQuestion() {
         //create a button
         const optionButton = document.createElement('button');
         optionButton.textContent = answer.text;
-        optionButton.classList.add('btn')
+        optionButton.classList.add('btn');
+        optionButton.dataset.isCorrect = answer.correct;
         optionButton.addEventListener("click", evaluateAnswer)
         options.append(optionButton)
 
     })
-    // questions.forEach(answer => {
-    //     const button =document.createElement
-    //     button.innerHTML = answer.text;
-    //     button.classList.add("btn");
-    //     if(answer.correct) {
-    //         button.dataset.correct = answer.correct;
-    //     }
-    // });
 }
 
 
-function evaluateAnswer() {
+function evaluateAnswer(e) {
     //evaluate whether correct and apply points to score
+    const isCorrect = e.target.dataset.isCorrect;
+    //console.log(isCorrect)
+    if(isCorrect===true){
+        console.log('correct')
+        //add points to score
+        //+= adds the following #
+        score += 20;
+        currentScore.textContent = `score: ${score}`;
+    } else {
+        console.log("incorrect")
+        //take time away
+        timeLeft -= 5;
+        console.log(timeLeft);
+        timerEl.textContent = `timer: ${timeLeft} Seconds Remaining`;
+    }
 
     //trigger the next question to appear
-    if (currentQuestion < questions.length-1) {
+    if (currentQuestion < questions.length - 1) {
         currentQuestion++;
         showQuestion();
     } else {
