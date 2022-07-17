@@ -13,14 +13,16 @@ const options = document.querySelector(".optionsArea")
 const finalScore = document.querySelector("#final-score");
 const highScoresbutton = document.querySelector(".Highscore");
 const currentScore = document.querySelector("#current-score");
-const wrongOrRight = document.querySelector("correct-wrong");
-const displayEndScore = document.querySelector("#scoreDisplay")
+const wrongOrRight = document.querySelector(".correct-wrong");
+const displayEndScore = document.querySelector("#scoreDisplay");
+const submitButton = document.querySelector(".submit");
+const userInfoInput = document.querySelector("#initals");
 
 //declaring lets
 let timer;
 let score = 0;
-let initials = "";
-let timeLeft = 50;
+//let initials = "";
+let timeLeft = 30;
 let currentQuestion = 0;
 
 let gameScore = localStorage.getItem("Game-Score")
@@ -80,6 +82,7 @@ const questions = [
 startbtn.addEventListener("click", startGame);
 
 
+
 //Functions to begin the Game
 // WHEN I click the start button
 function startGame() {
@@ -93,7 +96,7 @@ function startGame() {
     //add timer after start game btn clicked
     timer = setInterval(() => {
         timeLeft--;
-        timerEl.textContent = "timer: " + timeLeft + " seconds remaining";
+        timerEl.textContent = "timer: " + timeLeft + " Seconds Remaining";
 
         if (timeLeft <= 0) {
             endGame();
@@ -115,7 +118,7 @@ function showQuestion() {
         const optionButton = document.createElement('button');
         optionButton.textContent = answer.text;
         optionButton.classList.add('btn');
-        optionButton.dataset.isCorrect = answer.correct;
+        optionButton.dataset.correct = answer.correct;
         optionButton.addEventListener("click", evaluateAnswer)
         options.append(optionButton)
 
@@ -124,29 +127,22 @@ function showQuestion() {
 
 
 function evaluateAnswer(event) {
+    event.preventDefault();
     //evaluate whether correct and apply points to score
-    const isCorrect = event.target.dataset.isCorrect;
+    var isCorrect = event.target.dataset.correct;
+
+   
     //console.log(isCorrect)
-    if(isCorrect){
-        console.log("correct");
-        
-        //wrongOrRight.textContent = "correct!";
-    
-        
-        //
+    if(isCorrect === "true"){
+        //console.log("correct");
+        wrongOrRight.textContent = "Right!"
         //add points to score
-        //+= adds the following #
         score += 20;
         currentScore.textContent = `score: ${score}`;
     } else {
-        console.log("incorrect")
-        //const wrong = document.createElement( );
-        //correct.textContent = `wrong!`;
-        //correct.classList.add("wrong-answer");
-        //questionsec.append(wrong);
-        //
-        //take time away
-        timeLeft -= 5;
+        //console.log("incorrect")
+        wrongOrRight.textContent = "Wrong!";
+        timeLeft -= 10;
         timerEl.textContent = `timer: ${timeLeft} Seconds Remaining`;
     }
 
@@ -175,8 +171,20 @@ function endGame() {
 
     localStorage.setItem("Game-Score", score);
     //show the score entry form
-
 }
+
+submitButton.addEventListener("click", function(event) {
+    event.preventDefault();
+
+    var userInput = {
+        userInitials: userInfoInput.trim(),
+    };
+
+    localStorage.setItem("initals", JSON.stringify(userInput));
+});
+
+
+
 
 // WHEN I answer a question incorrectly
 // THEN time is subtracted from the clock
