@@ -1,22 +1,22 @@
 //declare quaryselectors
 
 //start page query selectors
-const timerEl = document.querySelector(".timer")
-const title = document.querySelector(".title");
-const info = document.querySelector(".instructions");
-const startbtn = document.querySelector("#start-button");
+const timerEl = document.querySelector(".timer")//used to add a timer 
+const title = document.querySelector(".title");//used to hide titale
+const info = document.querySelector(".instructions");//hides info after start button is clicked
+const startbtn = document.querySelector("#start-button");//button to start the game 
+
+
 //questions query selectors
-const questionSec = document.querySelector("#question-section");
-const questionEl = document.querySelector(".question");
-const options = document.querySelector(".optionsArea");
+const questionSec = document.querySelector("#question-section");//used to unhide question section
+const questionEl = document.querySelector(".question");//shows question
+const options = document.querySelector(".optionsArea");//buttons link to this queryselector
 const wrongOrRight = document.querySelector(".correct-wrong");//displays right or wrong
 const currentScore = document.querySelector("#current-score");//shows score in question sec
+
+
 //Final score query selectors
-
 const finalScore = document.querySelector("#final-score");//identify specific div
-//const highScoresbutton = document.querySelector(".Highscore");
-
-
 const displayEndScore = document.querySelector("#scoreDisplay");//appends end score
 const submitButton = document.querySelector(".submit");//button to submit scores
 const userInfoInput = document.querySelector("#initials");//input where user puts initials
@@ -24,8 +24,7 @@ const userInfoInput = document.querySelector("#initials");//input where user put
 //declaring lets
 let timer;
 let score = 0;
-//let initials = "";
-let timeLeft = 50;
+let timeLeft = 40;
 let currentQuestion = 0;
 
 let gameScore = localStorage.getItem("Game-Score")
@@ -80,12 +79,10 @@ const questions = [
     },
 ]
 
-
+//Listens for click to START GAME
 startbtn.addEventListener("click", startGame);
 
 
-
-//Functions to begin the Game
 // WHEN I click the start button
 function startGame() {
     //hide start button and instructions
@@ -93,7 +90,6 @@ function startGame() {
     title.classList.add("hidden");
     info.classList.add("hidden");
     timerEl.textContent = `timer: ${timeLeft} Seconds Remaining`;
-    //timerEl.classList.remove("hidden");
 
     //add timer after start game btn clicked
     timer = setInterval(() => {
@@ -107,13 +103,6 @@ function startGame() {
     }, 1000);
     //shows first question
     showQuestion();
-
-    // if (!JSON.parse(localStorage.getItem("initials"))){
-    //     var ary1 = [];
-    //     var ary2 = [];
-    //     localStorage.setItem("initials",ary1);
-    //     localStorage.setItem("Game-Score",ary2);
-    // };
 };
 
 // THEN a timer starts and I am presented with a question
@@ -121,8 +110,7 @@ function showQuestion() {
     currentScore.textContent = `score: ${score}`;
     questionSec.classList.remove("hidden");
     questionEl.textContent = questions[currentQuestion].question;
-    options.innerHTML = '';//ASK!
-    //wrongOrRight.innerHTML = " ";
+    options.innerHTML = '';
     questions[currentQuestion].answers.forEach(answer => {
         //create a button
         const optionButton = document.createElement('button');
@@ -135,23 +123,21 @@ function showQuestion() {
     })
 }
 
-
+//evaluate question whether it is correct or incorrect
 function evaluateAnswer(event) {
     event.preventDefault();
     //evaluate whether correct and apply points to score
     var isCorrect = event.target.dataset.correct;
 
-   
-    //console.log(isCorrect)
+
     if(isCorrect === "true"){
-        //console.log("correct");
         wrongOrRight.textContent = "Right!"
         //add points to score
         score += 20;
         currentScore.textContent = `score: ${score}`;
     } else {
-        //console.log("incorrect")
         wrongOrRight.textContent = "Wrong!";
+        //deducts time when answered inccorectly
         timeLeft -= 10;
         timerEl.textContent = `timer: ${timeLeft} Seconds Remaining`;
     }
@@ -160,13 +146,13 @@ function evaluateAnswer(event) {
     if (currentQuestion < questions.length - 1) {
         currentQuestion++;
         showQuestion();
-        //questionSec.correct-answer.innerHTML 
     } else {
         endGame()
         timerEl.textContent = `timer: 0 Seconds Remaining`;
     }
 }
 
+//ends the game when there is no time left 
 function endGame() {
     //stopping the timer
     clearInterval(timer);
@@ -180,8 +166,10 @@ function endGame() {
     endScore.textContent = `your final score is: ${score}`;
     displayEndScore.append(endScore);
 
+    //adds game info to localstorage
     let scoreArray = [];
     if (!gameScore) {
+        //pushes score to an array
         scoreArray.push(score);
         localStorage.setItem("Game-Score", JSON.stringify(scoreArray));
     
@@ -190,12 +178,11 @@ function endGame() {
         scoreArray.push(score);
         localStorage.setItem("Game-Score", JSON.stringify(scoreArray));
     }
-    
-
-    
-    //show the score entry form
 }
 
+
+ //show the score entry form
+ //when initials are inputed in text
 submitButton.addEventListener("click", function(event) {
     //event.preventDefault();
 
@@ -213,14 +200,6 @@ submitButton.addEventListener("click", function(event) {
     }
     
 });
-
-
-// WHEN I answer a question incorrectly
-// THEN time is subtracted from the clock
-// WHEN all questions are answered or the timer reaches 0
-// THEN the game is over
-// WHEN the game is over
-// THEN I can save my initials and score
 
 
 
