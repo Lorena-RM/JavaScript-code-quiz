@@ -12,7 +12,7 @@
 <body>
   <header>
     <div>
-      <a class="highscore" target="_blank" href="./highscores.html">view high scores</a>
+      <a class="highscore" href="./highscores.html">view high scores</a>
     </div>
     <div>
       <div class="timer" class="hidden"></div>
@@ -39,10 +39,15 @@
     <!--Quiz end Area/Final Scores-->
     <div id="final-score" class="hidden">
       <h1>The Quiz has Ended!</h1>
+      
       <div id="scoreDisplay"></div>
       <form id="score-entry-form">
         <input type="text" name="initials" placeholder="ex. JD" id="initials"/>
-        <button id="submitScore" class="submit">Submit Score</button>
+
+        <button class="submit"><a href="./highscores.html">Submit Score</a></button>
+
+        <!--<a class="submit" href="./highscores.html" ><button>Submit Score</button></a>
+        -->
       </form>
     </div>
 

@@ -7,16 +7,19 @@ const info = document.querySelector(".instructions");
 const startbtn = document.querySelector(".btn");
 //questions query selectors
 const questionSec = document.querySelector("#question-section");
-const questionEl = document.querySelector(".question")
-const options = document.querySelector(".optionsArea")
+const questionEl = document.querySelector(".question");
+const options = document.querySelector(".optionsArea");
+const wrongOrRight = document.querySelector(".correct-wrong");//displays right or wrong
+const currentScore = document.querySelector("#current-score");//shows score in question sec
 //Final score query selectors
-const finalScore = document.querySelector("#final-score");
-const highScoresbutton = document.querySelector(".Highscore");
-const currentScore = document.querySelector("#current-score");
-const wrongOrRight = document.querySelector(".correct-wrong");
-const displayEndScore = document.querySelector("#scoreDisplay");
-const submitButton = document.querySelector(".submit");
-const userInfoInput = document.querySelector("#initals");
+
+const finalScore = document.querySelector("#final-score");//identify specific div
+//const highScoresbutton = document.querySelector(".Highscore");
+
+
+const displayEndScore = document.querySelector("#scoreDisplay");//appends end score
+const submitButton = document.querySelector(".submit");//button to submit scores
+const userInfoInput = document.querySelector("#initials");//input where user puts initials
 
 //declaring lets
 let timer;
@@ -27,7 +30,6 @@ let currentQuestion = 0;
 
 let gameScore = localStorage.getItem("Game-Score")
 
-//let highscores = JSON.parse(localStorage.getItem("highscores")) || [0];
 
 //declare question array
 const questions = [
@@ -105,7 +107,15 @@ function startGame() {
     }, 1000);
     //shows first question
     showQuestion();
+
+    // if (!JSON.parse(localStorage.getItem("initials"))){
+    //     var ary1 = [];
+    //     var ary2 = [];
+    //     localStorage.setItem("initials",ary1);
+    //     localStorage.setItem("Game-Score",ary2);
+    // };
 };
+
 // THEN a timer starts and I am presented with a question
 function showQuestion() {
     currentScore.textContent = `score: ${score}`;
@@ -153,6 +163,7 @@ function evaluateAnswer(event) {
         //questionSec.correct-answer.innerHTML 
     } else {
         endGame()
+        timerEl.textContent = `timer: 0 Seconds Remaining`;
     }
 }
 
@@ -169,21 +180,39 @@ function endGame() {
     endScore.textContent = `your final score is: ${score}`;
     displayEndScore.append(endScore);
 
-    localStorage.setItem("Game-Score", score);
+    let scoreArray = [];
+    if (!gameScore) {
+        scoreArray.push(score);
+        localStorage.setItem("Game-Score", JSON.stringify(scoreArray));
+    
+    } else {
+        scoreArray = scoreArray.concat(JSON.parse(gameScore)|| 0);
+        scoreArray.push(score);
+        localStorage.setItem("Game-Score", JSON.stringify(scoreArray));
+    }
+    
+
+    
     //show the score entry form
 }
 
 submitButton.addEventListener("click", function(event) {
-    event.preventDefault();
+    //event.preventDefault();
 
-    var userInput = {
-        userInitials: userInfoInput.trim(),
-    };
-
-    localStorage.setItem("initals", JSON.stringify(userInput));
+    var userInput = userInfoInput.value.trim();
+    var gameInitial = localStorage.getItem("initials");
+    let initialArray = [];
+    if (!gameInitial) {
+        initialArray.push(userInput);
+        localStorage.setItem("initials", JSON.stringify(initialArray));
+    
+    } else {
+        initialArray = initialArray.concat(JSON.parse(gameInitial)|| 0);
+        initialArray.push(userInput);
+        localStorage.setItem("initials", JSON.stringify(initialArray));
+    }
+    
 });
-
-
 
 
 // WHEN I answer a question incorrectly
