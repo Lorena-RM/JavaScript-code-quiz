@@ -56,7 +56,7 @@ button{
 }
 
 button:hover{
-    background-color: var(--lighter);
+    font-size: 25px;
 }
 
 .hidden {
