@@ -4,7 +4,7 @@
 const timerEl = document.querySelector(".timer")
 const title = document.querySelector(".title");
 const info = document.querySelector(".instructions");
-const startbtn = document.querySelector(".btn");
+const startbtn = document.querySelector("#start-button");
 //questions query selectors
 const questionSec = document.querySelector("#question-section");
 const questionEl = document.querySelector(".question");
@@ -25,7 +25,7 @@ const userInfoInput = document.querySelector("#initials");//input where user put
 let timer;
 let score = 0;
 //let initials = "";
-let timeLeft = 30;
+let timeLeft = 50;
 let currentQuestion = 0;
 
 let gameScore = localStorage.getItem("Game-Score")
@@ -93,7 +93,7 @@ function startGame() {
     title.classList.add("hidden");
     info.classList.add("hidden");
     timerEl.textContent = `timer: ${timeLeft} Seconds Remaining`;
-    timerEl.classList.remove("hidden");
+    //timerEl.classList.remove("hidden");
 
     //add timer after start game btn clicked
     timer = setInterval(() => {

@@ -14,16 +14,15 @@
     <div>
       <a class="highscore" href="./highscores.html">view high scores</a>
     </div>
-    <div>
-      <div class="timer" class="hidden"></div>
-    </div>
+
+    <div class="timer">Total Time is 50 Seconds!</div>
+    
   </header>
   <main>
     <h1 class="title" id="sTitle"> Coding Quiz Challenge</h1>
-    <p class="instructions">Try to answer the following code-related questions within the time limit. Keep in mind that
-      incorrect answers will penalize your score/time by ten seconds!</p>
+    <p class="instructions">Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!</p>
 
-    <button id="start-button" class="btn">Start Quiz</button>
+    <button id="start-button">Start Quiz</button>
 
 
     <!--Questions Area-->
@@ -41,13 +40,10 @@
       <h1>The Quiz has Ended!</h1>
       
       <div id="scoreDisplay"></div>
+
       <form id="score-entry-form">
         <input type="text" name="initials" placeholder="ex. JD" id="initials"/>
-
         <button class="submit"><a href="./highscores.html">Submit Score</a></button>
-
-        <!--<a class="submit" href="./highscores.html" ><button>Submit Score</button></a>
-        -->
       </form>
     </div>
 

@@ -19,7 +19,7 @@ function renderMessage() {
 function clearScores (){
     localStorage.removeItem("initials");
     localStorage.removeItem("Game-Score");
-    renderMessage();
+    lastPlayedGame.innerHTML= "";
 }
 
 document.querySelector("#clear").addEventListener("click", clearScores);
